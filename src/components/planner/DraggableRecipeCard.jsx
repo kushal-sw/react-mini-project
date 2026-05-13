@@ -3,26 +3,21 @@ import { Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export default function DraggableRecipeCard({ recipe, isOverlay = false }) {
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({
-    id: recipe.id,
+  const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
+    id: isOverlay ? `${recipe.id}-overlay` : recipe.id,
     data: recipe,
+    disabled: isOverlay,
   });
-
-  const style = transform
-    ? {
-        transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
-      }
-    : undefined;
 
   return (
     <div
-      ref={setNodeRef}
-      style={style}
-      {...listeners}
-      {...attributes}
+      ref={isOverlay ? undefined : setNodeRef}
+      {...(isOverlay ? {} : listeners)}
+      {...(isOverlay ? {} : attributes)}
       className={cn(
         "flex items-center gap-3 rounded-lg border bg-card p-2 shadow-sm cursor-grab active:cursor-grabbing hover:border-primary/50 transition-colors",
-        isOverlay && "shadow-lg border-primary/50 scale-105 rotate-2"
+        isOverlay && "shadow-lg border-primary/50 scale-105 rotate-2",
+        isDragging && !isOverlay && "opacity-50 border-dashed"
       )}
     >
       <div className="h-12 w-12 shrink-0 overflow-hidden rounded-md bg-muted">

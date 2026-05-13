@@ -7,6 +7,8 @@ import { useFilterStore } from "@/store/filterStore";
 import { Sparkles } from "lucide-react";
 import PageWrapper from "@/components/layout/PageWrapper";
 
+import BlurText from "@/components/ui/blur-text";
+
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState("popular");
   const [searchMode, setSearchMode] = useState("dish");
@@ -37,10 +39,14 @@ export default function Home() {
       <div className="space-y-8">
         {/* Hero / Header */}
         <div className="text-center space-y-3 pt-4">
-          <h1 className="text-4xl font-bold tracking-tight">
-            Discover <span className="text-primary">Delicious</span> Recipes
-          </h1>
-          <p className="text-muted-foreground text-lg max-w-lg mx-auto">
+          <BlurText
+            text="Discover Delicious Recipes"
+            delay={300}
+            animateBy="words"
+            direction="top"
+            className="text-4xl font-bold tracking-tight justify-center"
+          />
+          <p className="text-muted-foreground text-lg max-w-lg mx-auto mt-2">
             Search by dish name or ingredients you have on hand. Find your next
             favourite meal.
           </p>

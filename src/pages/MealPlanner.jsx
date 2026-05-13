@@ -1,7 +1,8 @@
 import { toast } from "sonner";
 import PageWrapper from "@/components/layout/PageWrapper";
 import { useState } from "react";
-import { DndContext, DragOverlay, closestCenter } from "@dnd-kit/core";
+import { DndContext, DragOverlay, pointerWithin } from "@dnd-kit/core";
+import { snapCenterToCursor } from "@dnd-kit/modifiers";
 import { useMealPlanStore } from "@/store/mealPlanStore";
 import { useRecipeSearch } from "@/hooks/useRecipeSearch";
 import SearchBar from "@/components/search/SearchBar";
@@ -43,7 +44,7 @@ export default function MealPlanner() {
   return (
     <PageWrapper>
       <DndContext
-        collisionDetection={closestCenter}
+        collisionDetection={pointerWithin}
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
       >
@@ -81,9 +82,11 @@ export default function MealPlanner() {
         </div>
 
         {/* Drag Overlay for smooth visuals */}
-        <DragOverlay dropAnimation={null}>
+        <DragOverlay dropAnimation={null} modifiers={[snapCenterToCursor]}>
           {activeDragRecipe ? (
-            <DraggableRecipeCard recipe={activeDragRecipe} isOverlay />
+            <div className="w-[280px]">
+              <DraggableRecipeCard recipe={activeDragRecipe} isOverlay />
+            </div>
           ) : null}
         </DragOverlay>
       </DndContext>

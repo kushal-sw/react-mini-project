@@ -1,5 +1,6 @@
 import { useFilterStore } from "@/store/filterStore";
 import { X } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const DIET_OPTIONS = [
@@ -21,32 +22,34 @@ export default function DietaryFilter() {
         {DIET_OPTIONS.map((diet) => {
           const active = isActive(diet.id);
           return (
-            <button
+            <Button
               key={diet.id}
+              variant={active ? "default" : "outline"}
+              size="sm"
               onClick={() => toggleDiet(diet.id)}
               className={cn(
-                "inline-flex items-center rounded-full border px-3 py-1.5 text-sm font-medium transition-all duration-200",
-                active
-                  ? "border-transparent bg-primary text-primary-foreground shadow-md scale-105"
-                  : "border-border bg-background text-muted-foreground hover:bg-muted hover:text-foreground hover:scale-105"
+                "rounded-full transition-all duration-200",
+                active ? "shadow-md scale-105" : "text-muted-foreground hover:scale-105"
               )}
             >
               <span className="mr-1.5">{diet.emoji}</span>
               {diet.label}
-            </button>
+            </Button>
           );
         })}
       </div>
 
       {/* Clear Filters Button */}
       {activeDiets.length > 0 && (
-        <button
+        <Button
+          variant="ghost"
+          size="sm"
           onClick={clearFilters}
-          className="flex items-center gap-1 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors mt-1"
+          className="text-xs font-medium text-muted-foreground hover:text-foreground transition-colors mt-1 h-8 gap-1"
         >
           <X className="h-3.5 w-3.5" />
           Clear all filters
-        </button>
+        </Button>
       )}
     </div>
   );

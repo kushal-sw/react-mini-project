@@ -23,32 +23,26 @@ export default function SearchBar({ onSearch, isLoading = false }) {
     <div className="w-full max-w-2xl mx-auto">
       {/* Mode Toggle */}
       <div className="flex items-center justify-center gap-1 mb-4 p-1 rounded-lg bg-muted/60 w-fit mx-auto">
-        <button
+        <Button
           type="button"
+          variant={mode === "dish" ? "default" : "ghost"}
+          size="sm"
           onClick={() => setMode("dish")}
-          className={cn(
-            "flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all duration-200",
-            mode === "dish"
-              ? "bg-background text-foreground shadow-sm"
-              : "text-muted-foreground hover:text-foreground"
-          )}
+          className="gap-2 transition-all duration-200"
         >
           <UtensilsCrossed className="h-4 w-4" />
           Search by Dish
-        </button>
-        <button
+        </Button>
+        <Button
           type="button"
+          variant={mode === "ingredient" ? "default" : "ghost"}
+          size="sm"
           onClick={() => setMode("ingredient")}
-          className={cn(
-            "flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all duration-200",
-            mode === "ingredient"
-              ? "bg-background text-foreground shadow-sm"
-              : "text-muted-foreground hover:text-foreground"
-          )}
+          className="gap-2 transition-all duration-200"
         >
           <Carrot className="h-4 w-4" />
           Search by Ingredient
-        </button>
+        </Button>
       </div>
 
       {/* Search Input */}

@@ -9,6 +9,36 @@
 const BASE = "https://api.spoonacular.com";
 const KEY = import.meta.env.VITE_SPOONACULAR_KEY;
 
+const MOCK_RECIPES = [
+  {
+    id: 1,
+    title: "Delicious Pasta Carbonara",
+    image: "https://images.unsplash.com/photo-1612874742237-6526221588e3",
+    readyInMinutes: 25,
+    servings: 2,
+    diets: ["dairy"],
+    healthScore: 85
+  },
+  {
+    id: 2,
+    title: "Healthy Chicken Salad",
+    image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c",
+    readyInMinutes: 15,
+    servings: 4,
+    diets: ["gluten-free", "healthy"],
+    healthScore: 92
+  },
+  {
+    id: 3,
+    title: "Vegan Chocolate Cake",
+    image: "https://images.unsplash.com/photo-1578985545062-69928b1ea9b9",
+    readyInMinutes: 45,
+    servings: 8,
+    diets: ["vegan", "dairy-free"],
+    healthScore: 60
+  }
+];
+
 /**
  * Search recipes by dish name with optional dietary filters.
  * GET /recipes/complexSearch
@@ -22,6 +52,10 @@ export const searchRecipes = async (query, diets = []) => {
   const res = await fetch(
     `${BASE}/recipes/complexSearch?query=${encodeURIComponent(query)}&number=12&addRecipeInformation=true&apiKey=${KEY}${dietParam}`
   );
+  if (res.status === 402) {
+    console.warn("Spoonacular API quota exceeded. Falling back to mock data.");
+    return { results: MOCK_RECIPES };
+  }
   if (!res.ok) {
     throw new Error(`Spoonacular API error: ${res.status} ${res.statusText}`);
   }
