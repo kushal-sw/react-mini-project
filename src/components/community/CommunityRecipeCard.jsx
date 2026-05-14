@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Clock, ChefHat } from "lucide-react";
+import { Clock, ChefHat, Trash2 } from "lucide-react";
+import { useCommunityStore } from "@/store/communityStore";
 
 export default function CommunityRecipeCard({ recipe }) {
+  const removeRecipe = useCommunityStore((state) => state.removeRecipe);
   const diets = recipe.dietaryTags || [];
   
   // Format date nicely
@@ -12,6 +14,12 @@ export default function CommunityRecipeCard({ recipe }) {
     day: "numeric",
     year: "numeric"
   });
+
+  const handleDelete = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    removeRecipe(recipe.id);
+  };
 
   return (
     <Link to={`/community/${recipe.id}`} className="group block h-full">
@@ -25,6 +33,15 @@ export default function CommunityRecipeCard({ recipe }) {
             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+          {/* Delete button */}
+          <button
+            onClick={handleDelete}
+            className="absolute top-3 left-3 opacity-0 group-hover:opacity-100 transition-all duration-200 p-1.5 rounded-lg bg-black/60 hover:bg-red-500/80 backdrop-blur-sm z-10"
+            title="Delete recipe"
+          >
+            <Trash2 className="h-3.5 w-3.5 text-white" />
+          </button>
 
           {/* Badge */}
           <Badge className="absolute top-3 right-3 bg-amber-500 hover:bg-amber-600 shadow-md">

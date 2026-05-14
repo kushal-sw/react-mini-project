@@ -71,8 +71,18 @@ function AddMealModal({ day, slot, onClose, onAdd }) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
-      style={{ background: "rgba(0,0,0,0.7)", backdropFilter: "blur(6px)" }}
+      className="fixed z-50 flex items-center justify-center p-4"
+      style={{
+        top: "80px",
+        left: 0,
+        right: 0,
+        bottom: 0,
+
+        backgroundSize: "100% 100%",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        backgroundAttachment: "fixed",
+      }}
       onClick={onClose}
     >
       <motion.div
@@ -80,13 +90,15 @@ function AddMealModal({ day, slot, onClose, onAdd }) {
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 20 }}
         transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-        className="w-full max-w-md max-h-[80vh] flex flex-col overflow-hidden"
+        className="w-full max-w-md flex flex-col"
         style={{
-          background: "#1a1030",
+          background: "rgba(255,255,255,0.12)",
           backdropFilter: "blur(20px)",
-          border: "1px solid rgba(255,255,255,0.1)",
-          borderRadius: 20,
-          boxShadow: "0 25px 60px rgba(0,0,0,0.5)",
+          border: "1px solid rgba(255,255,255,0.2)",
+          borderRadius: 16,
+          boxShadow: "0 8px 32px rgba(0,0,0,0.3)",
+          maxHeight: "calc(100vh - 160px)",
+          overflowY: "auto",
         }}
         onClick={(e) => e.stopPropagation()}
       >
@@ -353,7 +365,10 @@ export default function MealPlanner() {
 
   return (
     <PageWrapper>
-      <div className="space-y-8">
+      <div
+        className="space-y-8"
+        style={{ paddingTop: "80px", paddingBottom: "80px" }}
+      >
         {/* Greeting */}
         <div className="pt-4 space-y-1">
           <BlurText
@@ -402,12 +417,15 @@ export default function MealPlanner() {
                     <button
                       key={`${day}-${slot}`}
                       onClick={() => handleCellClick(day, slot)}
-                      className="group rounded-2xl p-3 min-h-[90px] flex flex-col items-center justify-center gap-1 transition-all duration-200 hover:scale-[1.03] hover:shadow-lg cursor-pointer border border-white/10 relative"
+                      className="group rounded-2xl p-3 min-h-[90px] flex flex-col items-center justify-center gap-1 transition-all duration-200 hover:scale-[1.03] hover:shadow-lg cursor-pointer relative"
                       style={{
                         background: meal
                           ? "rgba(168,85,247,0.25)"
                           : "rgba(255,255,255,0.08)",
                         backdropFilter: "blur(10px)",
+                        border: meal
+                          ? "1px solid rgba(255,255,255,0.1)"
+                          : "1px dashed rgba(255,255,255,0.2)",
                       }}
                     >
                       {meal ? (

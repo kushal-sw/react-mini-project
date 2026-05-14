@@ -68,15 +68,20 @@ export default function Register({ onRegister, onLoginClick }) {
     setLoading(true);
     try {
       const result = await createUserWithEmailAndPassword(auth, email, password);
-      await createOrUpdateProfile(result.user);
+      await createOrUpdateProfile(result.user, fullName);
       if (onRegister) onRegister();
     } catch (err) {
+      console.error("Register error:", err);
       if (err.code === "auth/email-already-in-use") {
         setError("This email is already registered. Please log in instead.");
       } else if (err.code === "auth/invalid-email") {
         setError("Invalid email address.");
+      } else if (err.code === "auth/operation-not-allowed") {
+        setError("Email/password sign-up is not enabled. Please enable it in Firebase console.");
+      } else if (err.code === "auth/weak-password") {
+        setError("Password is too weak. Use at least 6 characters.");
       } else {
-        setError("Something went wrong. Please try again.");
+        setError(`Error: ${err.message || err.code || "Unknown error"}`);
       }
     } finally {
       setLoading(false);

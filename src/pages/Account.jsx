@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Bell,
   Lock,
   LogOut,
   ChevronRight,
@@ -18,9 +17,10 @@ import {
   Zap,
 } from "lucide-react";
 import { auth } from "@/firebase";
-import { signOut, getAuth } from "firebase/auth";
+import { signOut, getAuth, updatePassword, EmailAuthProvider, reauthenticateWithCredential } from "firebase/auth";
 import PageWrapper from "@/components/layout/PageWrapper";
 import { supabase } from "@/lib/supabase";
+import { toast } from "sonner";
 
 /* ─── glass token ─── */
 const glass = {
@@ -181,12 +181,16 @@ export default function Account() {
   const [budget, setBudget] = useState("Mid");
 
   const streakDays = 12;
+  const [isGoogleUser, setIsGoogleUser] = useState(false);
 
   useEffect(() => {
     const loadAvatar = async () => {
       const auth = getAuth();
       const user = auth.currentUser;
       if (!user) return;
+      // Check if signed in with Google
+      const isGoogle = user.providerData.some(p => p.providerId === 'google.com');
+      setIsGoogleUser(isGoogle);
       try {
         const { data, error } = await supabase
           .from("profiles")
@@ -280,6 +284,42 @@ export default function Account() {
       /* noop */
     }
     window.location.href = "/";
+  };
+
+  const [showChangePassword, setShowChangePassword] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [changingPassword, setChangingPassword] = useState(false);
+
+  const handleChangePassword = async () => {
+    if (!currentPassword || !newPassword) {
+      toast.error("Please fill in both fields.");
+      return;
+    }
+    if (newPassword.length < 6) {
+      toast.error("New password must be at least 6 characters.");
+      return;
+    }
+    setChangingPassword(true);
+    try {
+      const authInstance = getAuth();
+      const user = authInstance.currentUser;
+      const credential = EmailAuthProvider.credential(user.email, currentPassword);
+      await reauthenticateWithCredential(user, credential);
+      await updatePassword(user, newPassword);
+      toast.success("Password changed successfully!");
+      setShowChangePassword(false);
+      setCurrentPassword("");
+      setNewPassword("");
+    } catch (e) {
+      if (e.code === "auth/wrong-password" || e.code === "auth/invalid-credential") {
+        toast.error("Current password is incorrect.");
+      } else {
+        toast.error(`Error: ${e.message}`);
+      }
+    } finally {
+      setChangingPassword(false);
+    }
   };
 
   return (
@@ -590,24 +630,79 @@ export default function Account() {
             Settings
           </p>
 
-          <ActionButton
-            icon={Bell}
-            label="Ping me (notifications)"
-            onClick={() => {}}
-            delay={0.05}
-          />
-          <ActionButton
-            icon={Lock}
-            label="Change password"
-            onClick={() => {}}
-            delay={0.1}
-          />
+          {!isGoogleUser && (
+            <AnimatePresence>
+            {showChangePassword ? (
+              <motion.div
+                key="change-pass-form"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                className="overflow-hidden"
+              >
+                <div
+                  className="rounded-2xl p-5 space-y-3"
+                  style={{
+                    background: "rgba(255,255,255,0.06)",
+                    border: "1px solid rgba(255,255,255,0.1)",
+                    backdropFilter: "blur(18px)",
+                  }}
+                >
+                  <p className="text-sm font-semibold text-white/80">Change Password</p>
+                  <input
+                    type="password"
+                    placeholder="Current password"
+                    value={currentPassword}
+                    onChange={(e) => setCurrentPassword(e.target.value)}
+                    className="w-full bg-white/10 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white placeholder:text-white/30 outline-none focus:border-purple-400 transition-colors"
+                  />
+                  <input
+                    type="password"
+                    placeholder="New password"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && handleChangePassword()}
+                    className="w-full bg-white/10 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white placeholder:text-white/30 outline-none focus:border-purple-400 transition-colors"
+                  />
+                  <div className="flex gap-2 pt-1">
+                    <motion.button
+                      whileTap={{ scale: 0.97 }}
+                      onClick={handleChangePassword}
+                      disabled={changingPassword}
+                      className="flex-1 py-2 rounded-xl text-sm font-semibold text-white cursor-pointer"
+                      style={{ background: "linear-gradient(135deg, #a855f7, #7c3aed)" }}
+                    >
+                      {changingPassword ? "Saving..." : "Save"}
+                    </motion.button>
+                    <motion.button
+                      whileTap={{ scale: 0.97 }}
+                      onClick={() => { setShowChangePassword(false); setCurrentPassword(""); setNewPassword(""); }}
+                      className="px-4 py-2 rounded-xl text-sm font-medium text-white/60 cursor-pointer"
+                      style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}
+                    >
+                      Cancel
+                    </motion.button>
+                  </div>
+                </div>
+              </motion.div>
+            ) : (
+              <ActionButton
+                key="change-pass-btn"
+                icon={Lock}
+                label="Change password"
+                onClick={() => setShowChangePassword(true)}
+                delay={0.05}
+              />
+            )}
+            </AnimatePresence>
+          )}
           <ActionButton
             icon={LogOut}
             label="Peace out ✌️"
             onClick={handleLogout}
             variant="destructive"
-            delay={0.15}
+            delay={0.1}
           />
         </div>
 
