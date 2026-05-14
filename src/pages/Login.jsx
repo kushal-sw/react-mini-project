@@ -7,6 +7,7 @@ import { ButtonColorful } from '../components/ui/button-colorful';
 import { EyeIcon } from 'lucide-react';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from '../firebase';
+import { createOrUpdateProfile } from '../lib/createProfile';
 
 export default function Login({ onLogin, onRegisterClick }) {
   const handleGoogleLogin = async () => {
@@ -14,6 +15,7 @@ export default function Login({ onLogin, onRegisterClick }) {
     try {
       const result = await signInWithPopup(auth, provider);
       console.log(result.user);
+      await createOrUpdateProfile(result.user);
       if (onLogin) onLogin();
     } catch (error) {
       console.log(error);

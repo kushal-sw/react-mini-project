@@ -1,9 +1,38 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import { Toaster } from "@/components/ui/sonner";
 import Grainient from "@/components/Grainient";
+import FloatingActionMenu from "@/components/ui/floating-action-menu";
+import { User, Settings, LogOut } from "lucide-react";
+import { auth } from "@/firebase";
+import { signOut } from "firebase/auth";
 
 export default function Layout() {
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+    } catch (e) {
+      // ignore signOut errors
+    }
+    // Reload to reset app auth state
+    window.location.href = "/";
+  };
+
+  const menuOptions = [
+    {
+      label: "Account",
+      Icon: <User className="w-4 h-4" />,
+      onClick: () => navigate("/account"),
+    },
+    {
+      label: "Logout",
+      Icon: <LogOut className="w-4 h-4" />,
+      onClick: handleLogout,
+    },
+  ];
+
   return (
     <div className="min-h-screen flex flex-col relative bg-[#111111] text-white">
       <div className="fixed inset-0 z-0">
@@ -31,6 +60,9 @@ export default function Layout() {
         </div>
       </footer>
       <Toaster />
+
+      {/* Floating Action Menu — visible on all authenticated pages */}
+      <FloatingActionMenu options={menuOptions} className="z-50" />
     </div>
   );
 }

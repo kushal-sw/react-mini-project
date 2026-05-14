@@ -11,6 +11,7 @@ const ShoppingList = lazy(() => import("./pages/ShoppingList"));
 const Community = lazy(() => import("./pages/Community"));
 const CommunityRecipeDetail = lazy(() => import("./pages/CommunityRecipeDetail"));
 const NotFound = lazy(() => import("./pages/NotFound"));
+const Account = lazy(() => import("./pages/Account"));
 const Login = lazy(() => import("./pages/Login"));
 const Register = lazy(() => import("./pages/Register"));
 const Landing = lazy(() => import("./pages/Landing"));
@@ -64,6 +65,8 @@ export default function App() {
                   <Route path="/shopping" element={<ShoppingList />} />
                   <Route path="/community" element={<Community />} />
                   <Route path="/community/:id" element={<CommunityRecipeDetail />} />
+                  <Route path="/account" element={<Account />} />
+                  <Route path="/settings" element={<Account />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </Suspense>

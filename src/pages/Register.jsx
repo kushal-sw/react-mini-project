@@ -19,6 +19,7 @@ import {
   fetchSignInMethodsForEmail,
 } from "firebase/auth";
 import { auth } from "../firebase";
+import { createOrUpdateProfile } from '../lib/createProfile';
 
 export default function Register({ onRegister, onLoginClick }) {
   const [fullName, setFullName] = useState("");
@@ -43,6 +44,7 @@ export default function Register({ onRegister, onLoginClick }) {
         return;
       }
 
+      await createOrUpdateProfile(result.user);
       if (onRegister) onRegister();
     } catch (error) {
       console.error(error);
@@ -65,7 +67,8 @@ export default function Register({ onRegister, onLoginClick }) {
 
     setLoading(true);
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      const result = await createUserWithEmailAndPassword(auth, email, password);
+      await createOrUpdateProfile(result.user);
       if (onRegister) onRegister();
     } catch (err) {
       if (err.code === "auth/email-already-in-use") {
