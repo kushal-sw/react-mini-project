@@ -27,9 +27,14 @@ export default function DietaryFilter() {
               variant={active ? "default" : "outline"}
               size="sm"
               onClick={() => toggleDiet(diet.id)}
+              style={{
+                backgroundColor: active ? "rgba(168,85,247,0.5)" : "rgba(255,255,255,0.08)",
+                border: active ? "1px solid rgba(168,85,247,0.7)" : "1px solid rgba(255,255,255,0.2)",
+                color: "white",
+              }}
               className={cn(
                 "rounded-full transition-all duration-200",
-                active ? "shadow-md scale-105" : "text-muted-foreground hover:scale-105"
+                active ? "shadow-lg shadow-purple-500/20 scale-105 ring-1 ring-purple-400/50" : "hover:scale-105 hover:bg-white/15"
               )}
             >
               <span className="mr-1.5">{diet.emoji}</span>

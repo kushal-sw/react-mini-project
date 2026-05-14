@@ -64,14 +64,14 @@ export default function NutritionPanel({
   ];
 
   return (
-    <Card className="border-2 border-dashed border-primary/20">
+    <Card className="border-2 border-dashed border-white/20 bg-white/5">
       <CardHeader className="pb-3">
-        <CardTitle className="text-base font-semibold flex items-center gap-2">
-          <Flame className="h-4 w-4 text-primary" />
+        <CardTitle className="text-base font-semibold flex items-center gap-2 text-white">
+          <Flame className="h-4 w-4 text-purple-400" />
           Nutrition per serving
         </CardTitle>
         {currentServings !== originalServings && (
-          <p className="text-xs text-muted-foreground">
+          <p className="text-xs text-white/50">
             Scaled for {currentServings} serving{currentServings !== 1 ? "s" : ""}
           </p>
         )}
@@ -87,13 +87,13 @@ export default function NutritionPanel({
                 <Icon className="h-4 w-4" />
               </div>
               <div>
-                <p className="text-lg font-bold leading-none tabular-nums">
+                <p className="text-lg font-bold leading-none tabular-nums text-gray-900">
                   {value}
-                  <span className="text-xs font-normal text-muted-foreground ml-0.5">
+                  <span className="text-xs font-normal text-gray-500 ml-0.5">
                     {unit}
                   </span>
                 </p>
-                <p className="text-xs text-muted-foreground mt-0.5">{label}</p>
+                <p className="text-xs text-gray-600 mt-0.5">{label}</p>
               </div>
             </div>
           ))}

@@ -24,8 +24,8 @@ export default function Login({ onLogin, onRegisterClick }) {
   return (
     <div className="flex min-h-screen bg-[#111111] text-white font-sans">
       {/* Left side - Pattern */}
-      <div className="hidden lg:flex lg:w-1/2 p-4">
-        <div className="relative w-full h-full rounded-3xl overflow-hidden bg-[#1a103c]">
+      <div className="hidden lg:flex lg:w-1/2 p-8 h-screen sticky top-0">
+        <div className="relative w-full h-full rounded-[2.5rem] overflow-hidden bg-[#1a103c]">
           <Grainient 
             timeSpeed={2.0}
             color1="#a855f7" 
@@ -33,6 +33,17 @@ export default function Login({ onLogin, onRegisterClick }) {
             color3="#4c1d95" 
             className="w-full h-full opacity-80"
           />
+          {/* Top-left logo */}
+          <div className="absolute top-8 left-8">
+            <span className="text-2xl text-white tracking-[0.5px] drop-shadow-sm">
+              <span className="font-normal">Fork</span>
+              <span className="font-extrabold">Cast</span>
+            </span>
+          </div>
+          {/* Bottom-left text */}
+          <div className="absolute bottom-8 left-8 text-white/70 text-sm font-medium">
+            Eat good. Spend less.
+          </div>
         </div>
       </div>
 
@@ -72,14 +83,14 @@ export default function Login({ onLogin, onRegisterClick }) {
                 <Input 
                   type="email" 
                   placeholder="Email" 
-                  className="bg-[#1a1a1a] border-[#2a2a2a] text-white placeholder:text-gray-500 focus-visible:ring-purple-500 h-10"
+                  className="bg-[#1a1a1a] border-white/20 text-white placeholder:text-gray-500 focus-visible:ring-purple-500 h-10"
                 />
               </div>
               <div className="relative">
                 <Input 
                   type="password" 
                   placeholder="Password" 
-                  className="bg-[#1a1a1a] border-[#2a2a2a] text-white placeholder:text-gray-500 focus-visible:ring-purple-500 h-10 pr-10"
+                  className="bg-[#1a1a1a] border-white/20 text-white placeholder:text-gray-500 focus-visible:ring-purple-500 h-10 pr-10"
                 />
                 <button className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300">
                   <EyeIcon className="h-4 w-4" />

@@ -10,12 +10,13 @@ import PageWrapper from "@/components/layout/PageWrapper";
 import BlurText from "@/components/ui/blur-text";
 
 export default function Home() {
-  const [searchQuery, setSearchQuery] = useState("popular");
+  const [searchQuery, setSearchQuery] = useState("");
   const [searchMode, setSearchMode] = useState("dish");
+  const [hasSearched, setHasSearched] = useState(false);
   const activeDiets = useFilterStore((s) => s.activeDiets);
 
   const { data, isLoading, isError, error } = useRecipeSearch({
-    query: searchQuery,
+    query: searchQuery || undefined,
     mode: searchMode,
     diets: activeDiets,
   });
@@ -23,6 +24,7 @@ export default function Home() {
   const handleSearch = useCallback((query, mode) => {
     setSearchQuery(query);
     setSearchMode(mode);
+    setHasSearched(true);
   }, []);
 
   // Normalise results — complexSearch returns { results: [...] },
@@ -32,23 +34,20 @@ export default function Home() {
       ? data || []
       : data?.results || [];
 
-  const isDefaultSearch = searchQuery === "popular";
-
   return (
     <PageWrapper>
       <div className="space-y-8">
         {/* Hero / Header */}
         <div className="text-center space-y-3 pt-4">
           <BlurText
-            text="Discover Delicious Recipes"
+            text="What are you craving today?"
             delay={300}
             animateBy="words"
             direction="top"
-            className="text-4xl font-bold tracking-tight justify-center"
+            className="text-4xl font-bold tracking-tight justify-center text-white"
           />
-          <p className="text-muted-foreground text-lg max-w-lg mx-auto mt-2">
-            Search by dish name or ingredients you have on hand. Find your next
-            favourite meal.
+          <p className="text-white/60 text-lg max-w-lg mx-auto mt-2">
+            Search 10,000+ recipes. Add to your weekly plan instantly.
           </p>
         </div>
 
@@ -58,32 +57,28 @@ export default function Home() {
         {/* Dietary Filters */}
         <DietaryFilter />
 
-        {/* Results heading */}
-        {!isLoading && recipes.length > 0 && (
-          <div className="flex items-center gap-2 pt-2">
-            {isDefaultSearch ? (
-              <>
-                <Sparkles className="h-5 w-5 text-primary" />
-                <h2 className="text-xl font-semibold">Popular Recipes</h2>
-              </>
-            ) : (
-              <h2 className="text-xl font-semibold">
-                Search Results
-                <span className="text-muted-foreground font-normal ml-2 text-base">
-                  ({recipes.length} recipe{recipes.length !== 1 ? "s" : ""})
-                </span>
-              </h2>
+        {/* Results — only show after user searches */}
+        {hasSearched && (
+          <>
+            {!isLoading && recipes.length > 0 && (
+              <div className="flex items-center gap-2 pt-2">
+                <h2 className="text-xl font-semibold text-white">
+                  Search Results
+                  <span className="text-white/50 font-normal ml-2 text-base">
+                    ({recipes.length} recipe{recipes.length !== 1 ? "s" : ""})
+                  </span>
+                </h2>
+              </div>
             )}
-          </div>
-        )}
 
-        {/* Recipe Grid */}
-        <RecipeGrid
-          recipes={recipes}
-          isLoading={isLoading}
-          isError={isError}
-          error={error}
-        />
+            <RecipeGrid
+              recipes={recipes}
+              isLoading={isLoading}
+              isError={isError}
+              error={error}
+            />
+          </>
+        )}
       </div>
     </PageWrapper>
   );

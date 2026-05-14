@@ -177,6 +177,8 @@
     --color-ds-red-800: var(----ds-red-800);
     --ds-shadow-menu: var(----ds-shadow-menu);
     --color-ds-contrast-fg: var(----ds-contrast-fg);
+    --animate-accordion-down: accordion-down 0.2s ease-out;
+    --animate-accordion-up: accordion-up 0.2s ease-out;
   }
   * {
     @apply border-border outline-ring/50;
@@ -227,6 +229,30 @@
     }
   100% {
     opacity: 1;
+    }
+  }
+  @keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+    }
+  50% {
+    transform: translateY(-20px);
+    }
+  }
+  @keyframes accordion-down {
+  from {
+    height: 0;
+    }
+  to {
+    height: var(--radix-accordion-content-height);
+    }
+  }
+  @keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+    }
+  to {
+    height: 0;
     }
   }
 }

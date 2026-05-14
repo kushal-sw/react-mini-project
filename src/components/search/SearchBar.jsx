@@ -46,9 +46,9 @@ export default function SearchBar({ onSearch, isLoading = false }) {
       </div>
 
       {/* Search Input */}
-      <form onSubmit={handleSubmit} className="flex gap-2">
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+      <form onSubmit={handleSubmit}>
+        <div className="relative">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/40" />
           <Input
             id="search-input"
             type="text"
@@ -59,24 +59,9 @@ export default function SearchBar({ onSearch, isLoading = false }) {
             }
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="pl-10 h-12 text-base rounded-xl border-2 border-muted focus-visible:border-primary/50"
+            className="pl-12 h-14 text-base rounded-2xl border border-white/20 bg-white/10 text-white placeholder:text-white/40 focus-visible:border-purple-400/60 focus-visible:ring-purple-400/20 backdrop-blur-sm"
           />
         </div>
-        <Button
-          type="submit"
-          size="lg"
-          disabled={!query.trim() || isLoading}
-          className="h-12 px-6 rounded-xl font-semibold shadow-md hover:shadow-lg transition-shadow"
-        >
-          {isLoading ? (
-            <div className="h-4 w-4 animate-spin rounded-full border-2 border-primary-foreground border-t-transparent" />
-          ) : (
-            <>
-              <Search className="h-4 w-4 mr-2" />
-              Search
-            </>
-          )}
-        </Button>
       </form>
 
       {/* Helper text */}

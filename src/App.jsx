@@ -13,10 +13,12 @@ const CommunityRecipeDetail = lazy(() => import("./pages/CommunityRecipeDetail")
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Login = lazy(() => import("./pages/Login"));
 const Register = lazy(() => import("./pages/Register"));
+const Landing = lazy(() => import("./pages/Landing"));
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isRegistering, setIsRegistering] = useState(false);
+  const [showLanding, setShowLanding] = useState(true);
 
   return (
     <BrowserRouter>
@@ -24,7 +26,18 @@ export default function App() {
         {!isAuthenticated ? (
           <Route path="*" element={
             <Suspense fallback={<div className="flex items-center justify-center min-h-[50vh]"><div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full" /></div>}>
-              {isRegistering ? (
+              {showLanding ? (
+                <Landing 
+                  onSignIn={() => {
+                    setIsRegistering(false);
+                    setShowLanding(false);
+                  }}
+                  onSignUp={() => {
+                    setIsRegistering(true);
+                    setShowLanding(false);
+                  }}
+                />
+              ) : isRegistering ? (
                 <Register 
                   onRegister={() => setIsAuthenticated(true)} 
                   onLoginClick={() => setIsRegistering(false)} 

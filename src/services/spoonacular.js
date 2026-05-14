@@ -54,7 +54,13 @@ export const searchRecipes = async (query, diets = []) => {
   );
   if (res.status === 402) {
     console.warn("Spoonacular API quota exceeded. Falling back to mock data.");
-    return { results: MOCK_RECIPES };
+    let filtered = MOCK_RECIPES;
+    if (diets.length > 0) {
+      filtered = MOCK_RECIPES.filter((r) =>
+        diets.every((d) => r.diets?.includes(d))
+      );
+    }
+    return { results: filtered };
   }
   if (!res.ok) {
     throw new Error(`Spoonacular API error: ${res.status} ${res.statusText}`);
