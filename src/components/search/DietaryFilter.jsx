@@ -9,7 +9,6 @@ const DIET_OPTIONS = [
   { id: "gluten-free", label: "Gluten-Free", emoji: "🌾" },
   { id: "dairy-free", label: "Dairy-Free", emoji: "🥛" },
   { id: "keto", label: "Keto", emoji: "🥑" },
-  { id: "halal", label: "Halal", emoji: "☪️" },
 ];
 
 export default function DietaryFilter() {

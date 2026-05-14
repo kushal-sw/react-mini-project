@@ -8,7 +8,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Plus } from "lucide-react";
 import { toast } from "sonner";
 
-const DIET_OPTIONS = ["Vegan", "Vegetarian", "Gluten-Free", "Dairy-Free", "Keto", "Halal"];
+const DIET_OPTIONS = ["Vegan", "Vegetarian", "Gluten-Free", "Dairy-Free", "Keto"];
 
 export default function RecipeSubmitForm() {
   const { addRecipe } = useCommunityStore();

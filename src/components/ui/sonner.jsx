@@ -1,28 +1,39 @@
 'use client';;
 import * as React from 'react';
-import { useTheme } from 'next-themes';
 import { Toaster as Sonner } from 'sonner';
 
-const Toaster = ({
-  ...props
-}) => {
-  const { theme = 'system' } = useTheme();
-
+const Toaster = ({ ...props }) => {
   return (
     <Sonner
-      theme={theme}
-      className="group toaster [&_[data-type=success]>[data-icon]]:text-success [&_[data-type=success]_[data-title]]:text-success [&_[data-type=info]_[data-title]]:text-info [&_[data-type=error]>[data-icon]]:text-destructive [&_[data-type=error]_[data-title]]:text-destructive"
+      theme="dark"
+      position="bottom-right"
+      richColors
+      expand={false}
       toastOptions={{
+        style: {
+          background: "rgba(255,255,255,0.08)",
+          backdropFilter: "blur(20px)",
+          WebkitBackdropFilter: "blur(20px)",
+          border: "1px solid rgba(255,255,255,0.15)",
+          borderRadius: "14px",
+          color: "#fff",
+          fontSize: "14px",
+          fontWeight: "500",
+          boxShadow: "0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05)",
+          padding: "14px 18px",
+          minWidth: "300px",
+        },
         classNames: {
-          toast:
-            'group toast group-[.toaster]:bg-background group-[.toaster]:text-foreground! group-[.toaster]:border-border group-[.toaster]:shadow-lg has-[[role=alert]]:border-0! has-[[role=alert]]:shadow-none! has-[[role=alert]]:bg-transparent!',
-          description: 'group-[.toast]:text-muted-foreground',
-          actionButton: 'group-[.toast]:rounded-md! group-[.toast]:bg-primary group-[.toast]:text-primary-foreground!',
-          cancelButton:
-            'group-[.toast]:rounded-md! group-[.toast]:bg-secondary group-[.toast]:text-secondary-foreground!',
+          title: "text-white font-semibold text-[14px]",
+          description: "text-white/60 text-[12px]",
+          success: "!border-l-4 !border-l-emerald-400",
+          error: "!border-l-4 !border-l-red-400",
+          warning: "!border-l-4 !border-l-amber-400",
+          info: "!border-l-4 !border-l-blue-400",
         },
       }}
-      {...props} />
+      {...props}
+    />
   );
 };
 
