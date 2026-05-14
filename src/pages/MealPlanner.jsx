@@ -72,7 +72,7 @@ function AddMealModal({ day, slot, onClose, onAdd }) {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
-      style={{ background: "rgba(0,0,0,0.15)" }}
+      style={{ background: "rgba(0,0,0,0.7)", backdropFilter: "blur(6px)" }}
       onClick={onClose}
     >
       <motion.div
@@ -96,10 +96,23 @@ function AddMealModal({ day, slot, onClose, onAdd }) {
           style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}
         >
           <div>
-            <h3 style={{ fontSize: 18, fontWeight: 700, color: "#fff", margin: 0 }}>
+            <h3
+              style={{
+                fontSize: 18,
+                fontWeight: 700,
+                color: "#fff",
+                margin: 0,
+              }}
+            >
               Add meal
             </h3>
-            <p style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", marginTop: 2 }}>
+            <p
+              style={{
+                fontSize: 13,
+                color: "rgba(255,255,255,0.4)",
+                marginTop: 2,
+              }}
+            >
               {day} · {slot}
             </p>
           </div>
@@ -131,7 +144,10 @@ function AddMealModal({ day, slot, onClose, onAdd }) {
               padding: "10px 14px",
             }}
           >
-            <Search className="w-4 h-4 flex-shrink-0" style={{ color: "rgba(255,255,255,0.35)" }} />
+            <Search
+              className="w-4 h-4 flex-shrink-0"
+              style={{ color: "rgba(255,255,255,0.35)" }}
+            />
             <input
               type="text"
               value={query}
@@ -179,19 +195,39 @@ function AddMealModal({ day, slot, onClose, onAdd }) {
         >
           <div className="space-y-2">
             {loading && (
-              <div className="flex items-center justify-center" style={{ padding: "48px 0" }}>
-                <Loader2 className="w-6 h-6 animate-spin" style={{ color: "#a855f7" }} />
+              <div
+                className="flex items-center justify-center"
+                style={{ padding: "48px 0" }}
+              >
+                <Loader2
+                  className="w-6 h-6 animate-spin"
+                  style={{ color: "#a855f7" }}
+                />
               </div>
             )}
 
             {!loading && searched && results.length === 0 && (
-              <p style={{ textAlign: "center", color: "rgba(255,255,255,0.3)", fontSize: 13, padding: "32px 0" }}>
+              <p
+                style={{
+                  textAlign: "center",
+                  color: "rgba(255,255,255,0.3)",
+                  fontSize: 13,
+                  padding: "32px 0",
+                }}
+              >
                 No recipes found. Try a different search.
               </p>
             )}
 
             {!loading && !searched && (
-              <p style={{ textAlign: "center", color: "rgba(255,255,255,0.3)", fontSize: 13, padding: "32px 0" }}>
+              <p
+                style={{
+                  textAlign: "center",
+                  color: "rgba(255,255,255,0.3)",
+                  fontSize: 13,
+                  padding: "32px 0",
+                }}
+              >
                 Search for a recipe to add to {day}'s {slot.toLowerCase()}
               </p>
             )}
@@ -237,23 +273,34 @@ function AddMealModal({ day, slot, onClose, onAdd }) {
                     }}
                   />
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <p style={{
-                      fontSize: 13,
-                      fontWeight: 500,
-                      color: "#fff",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                      margin: 0,
-                    }}>
+                    <p
+                      style={{
+                        fontSize: 13,
+                        fontWeight: 500,
+                        color: "#fff",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                        margin: 0,
+                      }}
+                    >
                       {recipe.title}
                     </p>
-                    <p style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", marginTop: 2 }}>
+                    <p
+                      style={{
+                        fontSize: 11,
+                        color: "rgba(255,255,255,0.4)",
+                        marginTop: 2,
+                      }}
+                    >
                       {recipe.readyInMinutes && `${recipe.readyInMinutes} min`}
                       {recipe.servings && ` · ${recipe.servings} servings`}
                     </p>
                   </div>
-                  <Plus className="w-4 h-4 flex-shrink-0" style={{ color: "rgba(255,255,255,0.3)" }} />
+                  <Plus
+                    className="w-4 h-4 flex-shrink-0"
+                    style={{ color: "rgba(255,255,255,0.3)" }}
+                  />
                 </motion.button>
               ))}
           </div>
@@ -337,7 +384,6 @@ export default function MealPlanner() {
                 {day}
               </div>
             ))}
-
             {/* Meal Rows */}
             {SLOTS.map((slot) => (
               <>
@@ -441,7 +487,9 @@ export default function MealPlanner() {
               <p className="text-2xl font-bold text-white">
                 {totalMeals > 0 ? Math.round(totalMeals * 520) : "—"}
               </p>
-              <p className="text-sm text-white/50 font-medium">Calories today</p>
+              <p className="text-sm text-white/50 font-medium">
+                Calories today
+              </p>
             </div>
           </div>
         </div>
