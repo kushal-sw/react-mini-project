@@ -18,8 +18,8 @@ export default function Login({ onLogin, onRegisterClick }) {
       await createOrUpdateProfile(result.user);
       if (onLogin) onLogin();
     } catch (error) {
-      console.log(error);
-      alert("Failed to login with Google");
+      console.error("Google login error:", error);
+      alert("Failed to login with Google: " + (error.message || "Unknown error"));
     }
   };
 

@@ -68,7 +68,7 @@ function AddMealModal({ day, slot, onClose, onAdd }) {
 
   return (
     <motion.div
-      initial={{ opacity: 0 }}
+      initial={{ opacity: 1 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       className="fixed z-50 flex items-center justify-center p-4"
@@ -77,26 +77,23 @@ function AddMealModal({ day, slot, onClose, onAdd }) {
         left: 0,
         right: 0,
         bottom: 0,
-
-        backgroundSize: "100% 100%",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        backgroundAttachment: "fixed",
+        background: "transparent",
       }}
       onClick={onClose}
     >
       <motion.div
-        initial={{ opacity: 0, scale: 0.95, y: 20 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
+        initial={{ scale: 0.95, y: 20 }}
+        animate={{ scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 20 }}
         transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
         className="w-full max-w-md flex flex-col"
         style={{
-          background: "rgba(255,255,255,0.12)",
-          backdropFilter: "blur(20px)",
+          background: "linear-gradient(145deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 100%)",
+          backdropFilter: "blur(40px)",
+          WebkitBackdropFilter: "blur(40px)",
           border: "1px solid rgba(255,255,255,0.2)",
-          borderRadius: 16,
-          boxShadow: "0 8px 32px rgba(0,0,0,0.3)",
+          borderRadius: 24,
+          boxShadow: "0 24px 48px -12px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.2)",
           maxHeight: "calc(100vh - 160px)",
           overflowY: "auto",
         }}
@@ -104,25 +101,26 @@ function AddMealModal({ day, slot, onClose, onAdd }) {
       >
         {/* Header */}
         <div
-          className="flex items-center justify-between p-5 pb-3"
-          style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}
+          className="flex items-center justify-between p-6 pb-4"
+          style={{ borderBottom: "1px solid rgba(255,255,255,0.1)" }}
         >
           <div>
             <h3
               style={{
-                fontSize: 18,
+                fontSize: 20,
                 fontWeight: 700,
                 color: "#fff",
                 margin: 0,
+                letterSpacing: "-0.02em",
               }}
             >
               Add meal
             </h3>
             <p
               style={{
-                fontSize: 13,
-                color: "rgba(255,255,255,0.4)",
-                marginTop: 2,
+                fontSize: 14,
+                color: "rgba(255,255,255,0.6)",
+                marginTop: 4,
               }}
             >
               {day} · {slot}
@@ -130,35 +128,37 @@ function AddMealModal({ day, slot, onClose, onAdd }) {
           </div>
           <button
             onClick={onClose}
-            className="cursor-pointer"
+            className="cursor-pointer transition-colors hover:bg-white/10"
             style={{
-              padding: 8,
-              borderRadius: 12,
-              background: "rgba(255,255,255,0.06)",
-              border: "1px solid rgba(255,255,255,0.08)",
+              width: 36,
+              height: 36,
+              padding: 0,
+              borderRadius: "50%",
+              background: "rgba(255,255,255,0.08)",
+              border: "1px solid rgba(255,255,255,0.1)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
             }}
           >
-            <X className="w-5 h-5" style={{ color: "rgba(255,255,255,0.5)" }} />
+            <X className="w-5 h-5" style={{ color: "rgba(255,255,255,0.7)" }} />
           </button>
         </div>
 
         {/* Search bar */}
-        <div style={{ padding: "16px 20px" }}>
+        <div style={{ padding: "20px 24px" }}>
           <div
-            className="flex items-center gap-2"
+            className="flex items-center gap-3 transition-colors hover:bg-white/10 focus-within:bg-white/10"
             style={{
-              background: "rgba(255,255,255,0.08)",
-              border: "1px solid rgba(255,255,255,0.1)",
-              borderRadius: 14,
-              padding: "10px 14px",
+              background: "rgba(255,255,255,0.06)",
+              border: "1px solid rgba(255,255,255,0.15)",
+              borderRadius: 20,
+              padding: "10px 10px 10px 16px",
             }}
           >
             <Search
-              className="w-4 h-4 flex-shrink-0"
-              style={{ color: "rgba(255,255,255,0.35)" }}
+              className="w-5 h-5 flex-shrink-0"
+              style={{ color: "rgba(255,255,255,0.5)" }}
             />
             <input
               type="text"
@@ -173,26 +173,28 @@ function AddMealModal({ day, slot, onClose, onAdd }) {
                 border: "none",
                 outline: "none",
                 color: "#fff",
-                fontSize: 14,
+                fontSize: 15,
               }}
+              className="placeholder-white/40"
             />
             <button
               onClick={handleSearch}
               disabled={loading || !query.trim()}
-              className="cursor-pointer"
+              className="cursor-pointer transition-all hover:scale-105 active:scale-95"
               style={{
-                padding: "5px 14px",
-                borderRadius: 10,
-                fontSize: 12,
+                padding: "8px 16px",
+                borderRadius: 14,
+                fontSize: 13,
                 fontWeight: 600,
                 color: "#fff",
-                background: "linear-gradient(135deg, #a855f7, #7c3aed)",
-                border: "none",
-                opacity: loading || !query.trim() ? 0.3 : 1,
+                background: "rgba(168,85,247,0.8)",
+                backdropFilter: "blur(4px)",
+                border: "1px solid rgba(255,255,255,0.2)",
+                opacity: loading || !query.trim() ? 0.5 : 1,
               }}
             >
               {loading ? (
-                <Loader2 className="w-3 h-3 animate-spin" />
+                <Loader2 className="w-4 h-4 animate-spin" />
               ) : (
                 "Search"
               )}
@@ -235,9 +237,9 @@ function AddMealModal({ day, slot, onClose, onAdd }) {
               <p
                 style={{
                   textAlign: "center",
-                  color: "rgba(255,255,255,0.3)",
-                  fontSize: 13,
-                  padding: "32px 0",
+                  color: "rgba(255,255,255,0.4)",
+                  fontSize: 14,
+                  padding: "40px 0",
                 }}
               >
                 Search for a recipe to add to {day}'s {slot.toLowerCase()}

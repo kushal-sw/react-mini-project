@@ -47,8 +47,8 @@ export default function Register({ onRegister, onLoginClick }) {
       await createOrUpdateProfile(result.user);
       if (onRegister) onRegister();
     } catch (error) {
-      console.error(error);
-      setError("Failed to sign up with Google.");
+      console.error("Google signup error:", error);
+      setError("Failed to sign up with Google: " + (error.message || "Unknown error"));
     }
   };
 

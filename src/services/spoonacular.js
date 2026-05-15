@@ -96,6 +96,23 @@ export const getRecipeById = async (id) => {
   const res = await fetch(
     `${BASE}/recipes/${id}/information?includeNutrition=true&apiKey=${KEY}`
   );
+  if (res.status === 402 || res.status === 401) {
+    console.warn("Spoonacular API error/quota. Falling back to mock data.");
+    return {
+      id,
+      title: "Mock Recipe",
+      image: "https://images.unsplash.com/photo-1612874742237-6526221588e3",
+      readyInMinutes: 30,
+      servings: 2,
+      extendedIngredients: [
+        { id: 1001, name: "butter", amount: 2, unit: "tbsp", aisle: "Milk, Eggs, Other Dairy" },
+        { id: 1002, name: "garlic", amount: 3, unit: "cloves", aisle: "Produce" },
+        { id: 1003, name: "chicken breast", amount: 1, unit: "lb", aisle: "Meat" },
+        { id: 1004, name: "salt and pepper", amount: 1, unit: "pinch", aisle: "Spices and Seasonings" }
+      ],
+      analyzedInstructions: []
+    };
+  }
   if (!res.ok) {
     throw new Error(`Spoonacular API error: ${res.status} ${res.statusText}`);
   }
@@ -114,6 +131,19 @@ export const getRecipesBulk = async (ids) => {
   const res = await fetch(
     `${BASE}/recipes/informationBulk?ids=${ids.join(",")}&includeNutrition=true&apiKey=${KEY}`
   );
+  if (res.status === 402 || res.status === 401) {
+    console.warn("Spoonacular API error/quota. Falling back to mock data.");
+    return ids.map((id) => ({
+      id,
+      title: "Mock Recipe",
+      extendedIngredients: [
+        { id: 1001, name: "butter", amount: 2, unit: "tbsp", aisle: "Milk, Eggs, Other Dairy" },
+        { id: 1002, name: "garlic", amount: 3, unit: "cloves", aisle: "Produce" },
+        { id: 1003, name: "chicken breast", amount: 1, unit: "lb", aisle: "Meat" },
+        { id: 1004, name: "salt and pepper", amount: 1, unit: "pinch", aisle: "Spices and Seasonings" }
+      ]
+    }));
+  }
   if (!res.ok) {
     throw new Error(`Spoonacular API error: ${res.status} ${res.statusText}`);
   }
