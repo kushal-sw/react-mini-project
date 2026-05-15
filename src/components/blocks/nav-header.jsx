@@ -15,7 +15,7 @@ function NavHeader() {
   return (
     <ul
       className="relative mx-auto flex w-fit rounded-full p-1 shadow-lg border border-white/20"
-      style={{ backgroundColor: "rgba(255,255,255,0.1)", backdropFilter: "blur(10px)" }}
+      style={{ backgroundColor: "#111111" }}
       onMouseLeave={() => setPosition((pv) => ({ ...pv, opacity: 0 }))}>
       <Tab setPosition={setPosition} onClick={() => navigate('/')}>Home</Tab>
       <Tab setPosition={setPosition} onClick={() => navigate('/planner')}>Meal Planner</Tab>
