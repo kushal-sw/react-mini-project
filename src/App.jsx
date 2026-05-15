@@ -1,5 +1,5 @@
 import { Suspense, lazy, useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import Layout from "./components/layout/Layout";
 
 // Lazy load pages for performance
@@ -22,7 +22,7 @@ export default function App() {
   const [showLanding, setShowLanding] = useState(true);
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         {!isAuthenticated ? (
           <Route path="*" element={
@@ -75,6 +75,6 @@ export default function App() {
         </Route>
         )}
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
