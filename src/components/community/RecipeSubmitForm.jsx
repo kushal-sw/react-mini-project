@@ -91,7 +91,7 @@ export default function RecipeSubmitForm() {
           Submit a Recipe
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-[#1e1e1e]">
         <DialogHeader>
           <DialogTitle>Submit a Community Recipe</DialogTitle>
         </DialogHeader>

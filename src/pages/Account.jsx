@@ -565,62 +565,7 @@ export default function Account() {
           />
         </div>
 
-        {/* ═══════════════════════════════════════════
-            4. PLAN CARD
-        ═══════════════════════════════════════════ */}
-        <GlassCard
-          className="p-5 overflow-hidden relative"
-          style={{
-            ...glass,
-            background:
-              "linear-gradient(135deg, rgba(168,85,247,0.15), rgba(124,58,237,0.10), rgba(236,72,153,0.08))",
-            border: "1px solid rgba(168,85,247,0.25)",
-          }}
-        >
-          {/* subtle sparkle */}
-          <div className="absolute top-3 right-3 opacity-40">
-            <Crown className="w-10 h-10 text-yellow-400/30" />
-          </div>
 
-          <div className="relative space-y-3">
-            <div className="flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-purple-300" />
-              <span className="text-[11px] font-bold tracking-[0.15em] uppercase text-white/40">
-                Current Plan
-              </span>
-            </div>
-
-            <div className="flex items-baseline gap-2">
-              <span className="text-xl font-bold text-white">Free</span>
-              <span className="text-xs text-white/30">
-                / forever (but limited)
-              </span>
-            </div>
-
-            <p className="text-sm text-white/50 leading-relaxed">
-              Stop eating the same 5 things every week.
-              <br />
-              <span className="text-purple-300 font-medium">
-                Get ForkCast Plus
-              </span>{" "}
-              for unlimited meal plans, AI suggestions & zero ads.
-            </p>
-
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="w-full mt-2 py-2.5 rounded-xl text-sm font-semibold text-white cursor-pointer transition-all"
-              style={{
-                background:
-                  "linear-gradient(135deg, #a855f7, #7c3aed, #ec4899)",
-                boxShadow:
-                  "0 0 20px rgba(168,85,247,0.3), 0 0 40px rgba(168,85,247,0.1)",
-              }}
-            >
-              Upgrade to Plus →
-            </motion.button>
-          </div>
-        </GlassCard>
 
         {/* ═══════════════════════════════════════════
             5. ACTION BUTTONS

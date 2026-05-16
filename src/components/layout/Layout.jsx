@@ -1,5 +1,5 @@
 import { Outlet, useNavigate } from "react-router-dom";
-import Navbar from "./Navbar";
+import NavHeader from "@/components/blocks/nav-header";
 import { Toaster } from "@/components/ui/sonner";
 import Grainient from "@/components/Grainient";
 import FloatingActionMenu from "@/components/ui/floating-action-menu";
@@ -48,7 +48,9 @@ export default function Layout() {
           noiseScale={2}
         />
       </div>
-      <Navbar />
+      <header className="relative z-50 w-full pt-4 h-24 flex justify-center items-start">
+        <NavHeader />
+      </header>
       <main className="flex-1 mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8 relative z-10">
         <Outlet />
       </main>

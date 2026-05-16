@@ -14,8 +14,7 @@ function NavHeader() {
 
   return (
     <ul
-      className="relative mx-auto flex w-fit rounded-full p-1 shadow-lg border border-white/20"
-      style={{ backgroundColor: "#111111" }}
+      className="relative mx-auto flex w-fit rounded-full border border-gray-500 bg-transparent p-1"
       onMouseLeave={() => setPosition((pv) => ({ ...pv, opacity: 0 }))}>
       <Tab setPosition={setPosition} onClick={() => navigate('/')}>Home</Tab>
       <Tab setPosition={setPosition} onClick={() => navigate('/planner')}>Meal Planner</Tab>
@@ -47,7 +46,7 @@ const Tab = ({
           left: ref.current.offsetLeft,
         });
       }}
-      className="relative z-10 block cursor-pointer px-3 py-1.5 text-xs text-white font-medium md:px-5 md:py-3 md:text-base">
+      className="relative z-10 block cursor-pointer px-3 py-1.5 text-xs uppercase text-white mix-blend-difference md:px-5 md:py-3 md:text-base">
       {children}
     </li>
   );
@@ -59,7 +58,7 @@ const Cursor = ({
   return (
     <motion.li
       animate={position}
-      className="absolute z-0 h-7 rounded-full bg-white/20 md:h-12" />
+      className="absolute z-0 h-7 rounded-full bg-white md:h-12" />
   );
 };
 
