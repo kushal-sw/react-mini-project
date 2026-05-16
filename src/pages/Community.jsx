@@ -3,7 +3,7 @@ import { useCommunityStore } from "@/store/communityStore";
 import { useFilterStore } from "@/store/filterStore";
 import RecipeSubmitForm from "@/components/community/RecipeSubmitForm";
 import CommunityRecipeCard from "@/components/community/CommunityRecipeCard";
-import DietaryFilter from "@/components/search/DietaryFilter";
+import DietaryFilter from "@/components/recipe/DietaryFilter";
 import { Users } from "lucide-react";
 
 export default function Community() {

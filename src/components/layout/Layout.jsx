@@ -1,7 +1,7 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import NavHeader from "@/components/blocks/nav-header";
 import { Toaster } from "@/components/ui/sonner";
-import Grainient from "@/components/Grainient";
+import Grainient from "@/components/ui/Grainient";
 import FloatingActionMenu from "@/components/ui/floating-action-menu";
 import { User, Settings, LogOut } from "lucide-react";
 import { auth } from "@/firebase";

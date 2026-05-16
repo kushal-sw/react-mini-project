@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
-import SearchBar from "@/components/search/SearchBar";
-import DietaryFilter from "@/components/search/DietaryFilter";
+import SearchBar from "@/components/recipe/SearchBar";
+import DietaryFilter from "@/components/recipe/DietaryFilter";
 import RecipeGrid from "@/components/recipe/RecipeGrid";
 import { useRecipeSearch } from "@/hooks/useRecipeSearch";
 import { useFilterStore } from "@/store/filterStore";

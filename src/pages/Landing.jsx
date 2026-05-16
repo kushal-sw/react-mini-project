@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/coss-button";
 import BlurText from "@/components/ui/blur-text";
-import Grainient from "@/components/Grainient";
+import Grainient from "@/components/ui/Grainient";
 
 export default function Landing({ onSignIn, onSignUp }) {
   return (

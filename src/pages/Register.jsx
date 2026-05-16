@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Grainient from "../components/Grainient";
+import Grainient from "@/components/ui/Grainient";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import {
